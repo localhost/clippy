@@ -6,7 +6,7 @@ Clippy - Helping you copy text to your clipboard
 _Please note:_ **This is a forked and modified version of Clippy.**
 
 I removed the text/label besides the icon and added a JavaScript callback
-function. From here you may a describing text or just do something else.
+function. From there you can show an info text or just do something else.
 
 Get it here: [github.com/localhost/clippy](http://github.com/localhost/clippy)
 

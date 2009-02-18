@@ -1,6 +1,17 @@
 Clippy - Helping you copy text to your clipboard
 ================================================
 
+***
+
+_Please note:_ **This is a forked and modified version of Clippy.**
+
+I removed the text/label besides the icon and added a JavaScript callback
+function. From here you may a describing text or just do something else.
+
+Get it here: [github.com/localhost/clippy](http://github.com/localhost/clippy)
+
+***
+
 Clippy is a very simple Flash widget that makes it possible to place arbitrary
 text onto the client's clipboard. Here is what Clippy looks like on GitHub:
 
@@ -22,8 +33,8 @@ page:
         <param NAME="FlashVars" value="text=#{text}">
         <param name="bgcolor" value="#{bgcolor}">
         <embed src="/flash/clippy.swf"
-               width="110"
-               height="14"
+               width="10"
+               height="10"
                name="clippy"
                quality="high"
                allowScriptAccess="always"

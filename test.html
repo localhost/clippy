@@ -1,0 +1,49 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <title>Clippy</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <style type="text/css" media="screen">
+      #msg { font:9px Arial; color: #888; *margin-left:4px; }
+    </style>
+    <script type="text/javascript" charset="utf-8">
+      var logger = window['console'] && console.log || function() {}
+      var msg = '';
+      function clippy_action(o) {
+        switch(o.action) {
+          case 'click':
+            msg = 'copied: ' + o.text;
+          break;
+          case 'mouseOver':
+            msg = 'copy to clipboard';
+          break;
+          case 'mouseOut':
+            msg = '';
+          break;
+          default:
+            logger(o);
+          break;
+        }
+        document.getElementById('msg').innerHTML = msg;
+      }
+    </script>
+  </head>
+  <body>
+    <div>
+      <object id="clippy" classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" width="10" height="10">
+        <param name="FlashVars" value="text=foo&amp;fnc=clippy_action&amp;id=xxx" />
+        <param name="movie" value="build/clippy.swf"/>
+        <param name="allowScriptAccess" value="sameDomain" />
+        <param name="quality" value="high" />
+        <param name="scale" value="noscale" />
+        <param name="bgcolor" value="#fff" />
+        <embed type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer"
+          src="build/clippy.swf" width="10" height="10" name="clippy" quality="high" allowScriptAccess="sameDomain"
+          FlashVars="text=foo&amp;fnc=clippy_action&amp;id=xxx" bgcolor="#fff" />
+      </object>
+      <span id="msg"></span>
+    </div>
+  </body>
+</html>

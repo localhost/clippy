@@ -1,54 +1,50 @@
 import flash.display.MovieClip;
+import flash.events.Event;
 import flash.events.MouseEvent;
+import flash.external.ExternalInterface;
 import flash.display.SimpleButton;
-import flash.text.TextField;
-import flash.text.TextFieldAutoSize;
-import flash.text.TextFormat;
 
 class Clippy {
-  // Main
+
+  static function call_js(fn: String, options: Dynamic): Void {
+    if (ExternalInterface.available && fn != '') {
+      try {
+        ExternalInterface.call(fn, options);
+      } catch(e: Dynamic) {
+        trace("Exception: " + Std.string(e));
+      }
+    }
+    else {
+      trace("Error: ExternalInterface is not available!");
+    }
+  }
+
   static function main() {
     var text:String = flash.Lib.current.loaderInfo.parameters.text;
-    
-    // label
-    
-    var label:TextField = new TextField();
-    var format:TextFormat = new TextFormat("Arial", 10);
-    
-    label.text = "copy to clipboard";
-    label.setTextFormat(format);
-    label.textColor = 0x888888;
-    label.selectable = false;
-    label.x = 15;
-    label.visible = false;
-    
-    flash.Lib.current.addChild(label);
-    
-    // button
-    
+    var fnc:String = flash.Lib.current.loaderInfo.parameters.fnc;
+    var id:String = flash.Lib.current.loaderInfo.parameters.id;
+
     var button:SimpleButton = new SimpleButton();
     button.useHandCursor = true;
     button.upState = flash.Lib.attach("button_up");
     button.overState = flash.Lib.attach("button_over");
     button.downState = flash.Lib.attach("button_down");
     button.hitTestState = flash.Lib.attach("button_down");
-    
-    button.addEventListener(MouseEvent.MOUSE_UP, function(e:MouseEvent) {
+
+    button.addEventListener(MouseEvent.MOUSE_OVER, function(e:Event) {
+      call_js(fnc, { action: e.type, id: id });
+    });
+
+    button.addEventListener(MouseEvent.MOUSE_OUT, function(e:Event) {
+      call_js(fnc, { action: e.type, id: id });
+    });
+
+    button.addEventListener(MouseEvent.CLICK, function(e:Event) {
       flash.system.System.setClipboard(text);
-      label.text = "copied!";
-      label.setTextFormat(format);
+      call_js(fnc, { action: e.type, text: text, id: id });
     });
-    
-    button.addEventListener(MouseEvent.MOUSE_OVER, function(e:MouseEvent) {
-      label.visible = true;
-    });
-    
-    button.addEventListener(MouseEvent.MOUSE_OUT, function(e:MouseEvent) {
-      label.visible = false;
-      label.text = "copy to clipboard";
-      label.setTextFormat(format);
-    });
-    
+
     flash.Lib.current.addChild(button);
   }
+
 }
